@@ -5,7 +5,7 @@ name: arXiv-daily-ai-enhanced
 
 on:
   schedule:
-    - cron: "30 1 * * *"
+    - cron: "0 2 * * *"
   workflow_dispatch:
 
 
@@ -25,7 +25,7 @@ jobs:
       id: crawl_step
       run: |
         source .venv/bin/activate
-        today=$(date -u "+%Y-%m-%d")
+        today=$(TZ=Asia/Shanghai date "+%Y-%m-%d")
         echo "开始爬取 $today 的arXiv论文... / Starting to crawl $today arXiv papers..."
         
         # 检查今日文件是否已存在，如存在则删除 / Check if today's file exists, delete if found
@@ -65,6 +65,7 @@ jobs:
         echo "执行去重检查... / Performing intelligent deduplication check..."
         
         cd daily_arxiv
+        export CRAWL_DATE="${{ steps.crawl_step.outputs.crawl_date }}"
         # 执行去重检查脚本 / Execute intelligent deduplication check script
         set +e  # 暂时允许命令失败 / Temporarily allow command failure
         python daily_arxiv/check_stats.py
@@ -149,6 +150,25 @@ jobs:
             exit 1
         fi
         echo "Markdown转换完成 / Markdown conversion completed"
+
+    - name: Generate keyword daily report
+      run: |
+        source .venv/bin/activate
+        today=${{ steps.crawl_step.outputs.crawl_date }}
+        export LANGUAGE="${{ vars.LANGUAGE }}"
+        AI_FILE="data/${today}_AI_enhanced_${LANGUAGE}.jsonl"
+        RAW_FILE="data/${today}.jsonl"
+
+        echo "生成关键词日报... / Generating keyword daily report..."
+        if [ -f "$AI_FILE" ]; then
+          python report/generate_keyword_report.py --input "$AI_FILE" --date "$today" --output-dir report
+        elif [ -f "$RAW_FILE" ]; then
+          python report/generate_keyword_report.py --input "$RAW_FILE" --date "$today" --output-dir report
+        else
+          echo "未找到数据文件，生成占位日报... / No data file found, generating placeholder report..."
+          python report/generate_keyword_report.py --date "$today" --output-dir report
+        fi
+        echo "关键词日报生成完成 / Keyword daily report generated"
         
     - name: Update file list
       if: steps.dedup_check.outputs.has_new_content == 'true'
@@ -235,7 +255,6 @@ jobs:
         fi
 
     - name: Commit code changes to main branch
-      if: steps.dedup_check.outputs.has_new_content == 'true'
       run: |
         git config --global user.email "${{ vars.EMAIL }}"
         git config --global user.name "${{ vars.NAME }}"
@@ -252,12 +271,11 @@ jobs:
         if git diff --staged --quiet; then
           echo "没有代码变更需要提交 / No code changes to commit"
         else
-          git commit -m "chore: update data-config.js with repository info"
+          git commit -m "chore: update workflow config and daily report"
           echo "代码变更已提交到 main 分支 / Code changes committed to main branch"
         fi
 
     - name: Push code changes to main branch
-      if: steps.dedup_check.outputs.has_new_content == 'true'
       run: |
         # 设置Git配置以处理自动合并 / Set Git config for automatic merging
         git config pull.rebase true
