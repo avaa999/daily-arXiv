@@ -10,33 +10,44 @@ from datetime import datetime, timedelta, timezone
 from typing import Dict, Iterable, List, Set
 
 
-TOPIC_KEYWORDS: Dict[str, List[str]] = {
-    "autonomous exploration": [
-        "autonomous exploration",
-        "robot exploration",
-        "active exploration",
-        "frontier exploration",
+TOPIC_KEYWORDS: Dict[str, List[str]] ={
+    "DLO Manipulation": [
+        "deformable linear object", 
+        "DLO manipulation", 
+        "cable assembly", 
+        "rope manipulation", 
+        "shaping", 
+        "physics-aware"
     ],
-    "reinforcement learning": [
-        "reinforcement learning",
-        "deep reinforcement learning",
-        "policy gradient",
-        "q-learning",
-        "rl",
+    "Robotic Manipulation & Sensing": [
+        "robotic manipulation", 
+        "tactile sensing", 
+        "force control", 
+        "haptic", 
+        "scene graph", 
+        "data-driven modeling"
     ],
-    "path planning": [
-        "path planning",
-        "motion planning",
-        "trajectory planning",
-        "route planning",
+    "VLM & Multimodal": [
+        "VLM", 
+        "vision-language model", 
+        "multimodal model", 
+        "vision-language-action", 
+        "VLA"
     ],
-    "VLM": [
-        "vlm",
-        "vision-language model",
-        "vision language model",
-        "vision-language models",
-        "multimodal model",
+    "Reinforcement Learning": [
+        "reinforcement learning", 
+        "deep reinforcement learning", 
+        "policy gradient", 
+        "imitation learning", 
+        "human-to-robot demonstration"
     ],
+    "Planning & Exploration": [
+        "path planning", 
+        "motion planning", 
+        "trajectory planning", 
+        "autonomous exploration", 
+        "active exploration"
+    ]
 }
 
 TARGET_AUTHORS: Dict[str, List[str]] = {
