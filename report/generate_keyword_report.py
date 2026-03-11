@@ -40,13 +40,6 @@ TOPIC_KEYWORDS: Dict[str, List[str]] ={
         "policy gradient", 
         "imitation learning", 
         "human-to-robot demonstration"
-    ],
-    "Planning & Exploration": [
-        "path planning", 
-        "motion planning", 
-        "trajectory planning", 
-        "autonomous exploration", 
-        "active exploration"
     ]
 }
 
