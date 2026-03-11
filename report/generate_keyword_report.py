@@ -27,6 +27,15 @@ TOPIC_KEYWORDS: Dict[str, List[str]] ={
         "scene graph", 
         "data-driven modeling"
     ],
+    "Tactile Sensing": [
+        "tactile sensing",
+        "tactile sensor",
+        "haptic perception",
+        "force-torque sensing",
+        "GelSight",
+        "soft sensing",
+        "skin sensor"
+    ],
     "VLM & Multimodal": [
         "VLM", 
         "vision-language model", 
