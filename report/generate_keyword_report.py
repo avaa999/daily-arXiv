@@ -44,12 +44,14 @@ TOPIC_KEYWORDS: Dict[str, List[str]] ={
 }
 
 TARGET_AUTHORS: Dict[str, List[str]] = {
-    "Gao Fei": ["gao fei", "fei gao"],
-    "Zhou Boyu": ["zhou boyu", "boyu zhou"],
-    "Cao Yuhong": ["cao yuhong", "yuhong cao"],
-    "Daniele Nardi": ["daniele nardi"],
-    "Vincenzo Suriani": ["vincenzo suriani"],
-    "Guillaume Sartoretti": ["guillaume sartoretti"],
+    "Yunzhu Li": ["yunzhu li", "li yunzhu"],
+    "Mingrui Yu": ["mingrui yu", "yu mingrui"],
+    "Xiang Li": ["xiang li", "li xiang"],
+    "Gianluca Palli": ["gianluca palli", "palli gianluca"],
+    "Jan Swevers": ["jan swevers", "swevers jan"],
+    "Jiaming Qi": ["jiaming qi", "qi jiaming"],
+    "Peng Zhou": ["peng zhou", "zhou peng"],
+    "David Navarro-Alarcon": ["david navarro-alarcon", "navarro-alarcon david"]
 }
 
 
